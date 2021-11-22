@@ -1,5 +1,6 @@
-package ui.fxmlcontroller;
+package ui.controller;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,18 +11,22 @@ import com.user.User;
 import connector.ConnectionToDB;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import main.MainApp;
 
 public class LogInController {
 
-    Connection connect = null;
-    PreparedStatement pstmt = null;
-    ResultSet resultSet = null;
+    private Connection connect = null;
+    private PreparedStatement pstmt = null;
+    private ResultSet resultSet = null;
 
     @FXML
     private Button btnLogIn;
@@ -36,27 +41,44 @@ public class LogInController {
     private TextField txtUsername;
 
     @FXML
-    void btnLogInActionEvent(ActionEvent event) throws ClassNotFoundException, SQLException {
+    void initialize() {
+        btnLogIn.setDefaultButton(true);
+    }
+
+    @FXML
+    void btnLogInActionEvent(ActionEvent event)
+            throws ClassNotFoundException, SQLException, InterruptedException, IOException {
+        if (checkLogIn()) {
+            Parent root = FXMLLoader.load(getClass().getResource("../view/Shop.fxml"));
+            Scene scene = new Scene(root, 900, 600);
+            Stage stage = (Stage) btnLogIn.getScene().getWindow();
+
+            stage.setTitle("Shop");
+            stage.setScene(scene);
+        }
+    }
+
+    private boolean checkLogIn() throws ClassNotFoundException, SQLException {
         String username = txtUsername.getText();
         String password = txtPassword.getText();
 
+        // connect and query
         String query = "SELECT * FROM persons WHERE username = ? AND password = ?";
-
         connect = ConnectionToDB.ConnectToDB();
-
         pstmt = connect.prepareStatement(query);
         pstmt.setString(1, username);
         pstmt.setString(2, password);
         resultSet = pstmt.executeQuery();
 
         if (resultSet.next()) {
+            // create user for login session
             MainApp.myUser = new User(resultSet.getString("first_name"), resultSet.getString("last_name"),
                     resultSet.getString("username"), resultSet.getInt("rank"), resultSet.getInt("reward_point"));
-            lblAnnounce.setTextFill(Color.GREEN);
-            lblAnnounce.setText("Success");
+            return true;
         } else {
             lblAnnounce.setTextFill(Color.TOMATO);
             lblAnnounce.setText("Wrong Username or Password");
+            return false;
         }
 
     }
