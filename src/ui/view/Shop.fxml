@@ -53,9 +53,9 @@
               <columns>
                 <TableColumn fx:id="nameCol" minWidth="300.0" prefWidth="600.0" text="Name" />
                 <TableColumn fx:id="quantityCol" prefWidth="75.0" text="Quantity" />
-                  <TableColumn fx:id="unitPriceCol" minWidth="30.0" prefWidth="75.0" text="Unit Price" />
-                  <TableColumn fx:id="yourQuantityCol" prefWidth="75.0" text="Your quantity" />
-                  <TableColumn fx:id="amountCol" minWidth="30.0" prefWidth="75.0" text="Amount" />
+                  <TableColumn fx:id="priceCol" minWidth="30.0" prefWidth="75.0" text="Price" />
+                  <TableColumn fx:id="userQuantityCol" prefWidth="75.0" text="Your quantity" />
+                  <TableColumn fx:id="userAmountCol" minWidth="30.0" prefWidth="75.0" text="Amount" />
               </columns>
             </TableView>
          </children>
