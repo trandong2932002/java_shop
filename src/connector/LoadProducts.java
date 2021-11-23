@@ -36,7 +36,7 @@ public class LoadProducts {
                 BigDecimal importPrice = resultSet.getBigDecimal("import_price");
                 BigDecimal exportPrice = resultSet.getBigDecimal("export_price");
 
-                products.add(new ObservableProduct(name, countPerUnit, quantity, importPrice, exportPrice));
+                products.add(new ObservableProduct(name, countPerUnit + "", quantity + "", importPrice, exportPrice));
             }
         } catch (SQLException | ClassNotFoundException e) {
             System.err.println(e.getMessage());

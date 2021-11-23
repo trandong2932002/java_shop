@@ -2,28 +2,41 @@ package com.product;
 
 import java.math.BigDecimal;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class ObservableProduct {
     private StringProperty name;
-    private IntegerProperty countPerUnit;
-    private IntegerProperty quantity;
+    private StringProperty countPerUnit;
+    private StringProperty quantity;
     private StringProperty importPrice;
     private StringProperty exportPrice;
 
-    private IntegerProperty userQuantity = new SimpleIntegerProperty(0);
+    private StringProperty userQuantity = new SimpleStringProperty("0");
     private StringProperty userAmount = new SimpleStringProperty("0");
 
-    public ObservableProduct(String name, int countPerUnit, int quantity, BigDecimal importPrice,
+    // * userAmount -> objectBinding -> userQuantity (-> : bind to)
+    ObjectBinding<String> objectBinding = new ObjectBinding<String>() {
+        {
+            bind(userQuantity);
+        }
+
+        @Override
+        protected String computeValue() {
+            return getExportPrice().multiply(new BigDecimal(getUserQuantity())).toString();
+        }
+    };
+
+    public ObservableProduct(String name, String countPerUnit, String quantity, BigDecimal importPrice,
             BigDecimal exportPrice) {
         this.name = new SimpleStringProperty(name);
-        this.countPerUnit = new SimpleIntegerProperty(countPerUnit);
-        this.quantity = new SimpleIntegerProperty(quantity);
+        this.countPerUnit = new SimpleStringProperty(countPerUnit);
+        this.quantity = new SimpleStringProperty(quantity);
         this.importPrice = new SimpleStringProperty(importPrice.toString());
         this.exportPrice = new SimpleStringProperty(exportPrice.toString());
+        
+        userAmount.bind(objectBinding);
     }
 
     // * gets, sets, property
@@ -42,27 +55,27 @@ public class ObservableProduct {
 
     // count per unit
     public int getCountPerUnit() {
-        return countPerUnit.get();
+        return Integer.parseInt(countPerUnit.get());
     }
 
     public void setCountPerUnit(int countperunit) {
         this.countPerUnit.get();
     }
 
-    public IntegerProperty countPerUnitProperty() {
+    public StringProperty countPerUnitProperty() {
         return countPerUnit;
     }
 
     // quantity
     public int getQuantity() {
-        return quantity.get();
+        return Integer.parseInt(quantity.get());
     }
 
     public void setQuantity(int quantity) {
-        this.quantity.set(quantity);
+        this.quantity.set(quantity + "");
     }
 
-    public IntegerProperty quantityProperty() {
+    public StringProperty quantityProperty() {
         return quantity;
     }
 
@@ -94,14 +107,14 @@ public class ObservableProduct {
 
     // count per unit
     public int getUserQuantity() {
-        return userQuantity.get();
+        return Integer.parseInt(userQuantity.get());
     }
 
     public void setUserQuantity(int userQuantity) {
-        this.userQuantity.get();
+        this.userQuantity.set(userQuantity + "");
     }
 
-    public IntegerProperty userQuantityProperty() {
+    public StringProperty userQuantityProperty() {
         return userQuantity;
     }
 

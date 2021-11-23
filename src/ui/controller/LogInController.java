@@ -50,7 +50,7 @@ public class LogInController {
             throws ClassNotFoundException, SQLException, InterruptedException, IOException {
         if (checkLogIn()) {
             Parent root = FXMLLoader.load(getClass().getResource("../view/Shop.fxml"));
-            Scene scene = new Scene(root, 900, 600);
+            Scene scene = new Scene(root, 915, 600);
             Stage stage = (Stage) btnLogIn.getScene().getWindow();
 
             stage.setTitle("Shop");

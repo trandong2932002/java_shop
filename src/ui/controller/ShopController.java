@@ -3,7 +3,6 @@ package ui.controller;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.math.BigDecimal;
 
 import com.product.ObservableProduct;
 import com.user.UserType;
@@ -27,7 +26,6 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
-import javafx.util.converter.IntegerStringConverter;
 import main.MainApp;
 
 public class ShopController {
@@ -39,11 +37,11 @@ public class ShopController {
     @FXML
     private TableColumn<ObservableProduct, String> nameCol;
     @FXML
-    private TableColumn<ObservableProduct, Integer> quantityCol;
+    private TableColumn<ObservableProduct, String> quantityCol;
     @FXML
     private TableColumn<ObservableProduct, String> priceCol;
     @FXML
-    private TableColumn<ObservableProduct, Integer> userQuantityCol;
+    private TableColumn<ObservableProduct, String> userQuantityCol;
     @FXML
     private TableColumn<ObservableProduct, String> userAmountCol;
 
@@ -92,20 +90,13 @@ public class ShopController {
 
         // editable
         userQuantityCol.setCellValueFactory(new PropertyValueFactory<>("userQuantity"));
-        userQuantityCol.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-        userQuantityCol.setOnEditCommit(new EventHandler<CellEditEvent<ObservableProduct, Integer>>() {
+        userQuantityCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        userQuantityCol.setOnEditCommit(new EventHandler<CellEditEvent<ObservableProduct, String>>() {
             @Override
-            public void handle(CellEditEvent<ObservableProduct, Integer> t) {
+            public void handle(CellEditEvent<ObservableProduct, String> t) {
                 ObservableProduct rowProduct = t.getTableView().getItems().get(t.getTablePosition().getRow());
-                BigDecimal priceProduct = ((ObservableProduct) rowProduct).getExportPrice();
-                Integer newUserQuantity = t.getNewValue();
-                BigDecimal newUserAmount = ((BigDecimal) priceProduct.multiply(new BigDecimal(newUserQuantity)));
-                // set for its cell
-                ((ObservableProduct) rowProduct).setUserQuantity((Integer)newUserQuantity);
-                // set for amont cell
-                ((ObservableProduct) rowProduct).setUserAmount(newUserAmount);
-                // ((ObservableProduct) t.getTableView().getItems().get(t.getTablePosition().getRow()))
-                //         .setUserAmount(new BigDecimal(t.getNewValue()));
+                Integer newUserQuantity = Integer.parseInt(t.getNewValue());
+                ((ObservableProduct) rowProduct).setUserQuantity(newUserQuantity);
             }
         });
 
