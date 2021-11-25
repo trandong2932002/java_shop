@@ -43,6 +43,12 @@
                   <Button fx:id="backBtn" layoutX="18.0" layoutY="17.0" mnemonicParsing="false" onAction="#backBtnClicked" text="Back" />
                </children>
             </Pane>
+            <Pane layoutX="500.0" prefHeight="80.0" prefWidth="120.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Button fx:id="invoicingBtn" layoutX="20.0" layoutY="14.0" mnemonicParsing="false" onAction="#invoicingBtnClicked" text="Invoicing" />
+                  <Button fx:id="loadQuantityBtn" layoutX="14.0" layoutY="47.0" mnemonicParsing="false" onAction="#loadQuantityBtnClicked" text="Load New Qty" />
+               </children>
+            </Pane>
          </children>
       </AnchorPane>
    </top>

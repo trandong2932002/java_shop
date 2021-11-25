@@ -7,6 +7,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class ObservableProduct {
+    private String id;
+    // id = name_of_table + id_in_table
     private StringProperty name;
     private StringProperty countPerUnit;
     private StringProperty quantity;
@@ -28,18 +30,28 @@ public class ObservableProduct {
         }
     };
 
-    public ObservableProduct(String name, String countPerUnit, String quantity, BigDecimal importPrice,
+    public ObservableProduct(String id, String name, String countPerUnit, String quantity, BigDecimal importPrice,
             BigDecimal exportPrice) {
+        this.id = id;
         this.name = new SimpleStringProperty(name);
         this.countPerUnit = new SimpleStringProperty(countPerUnit);
         this.quantity = new SimpleStringProperty(quantity);
         this.importPrice = new SimpleStringProperty(importPrice.toString());
         this.exportPrice = new SimpleStringProperty(exportPrice.toString());
-        
+
         userAmount.bind(objectBinding);
     }
 
     // * gets, sets, property
+    // id
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     // name
     public String getName() {
         return name.get();

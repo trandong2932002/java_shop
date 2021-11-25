@@ -25,12 +25,13 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import main.MainApp;
 
 public class ShopController {
 
-    ObservableList<ObservableProduct> products = null;
+    private ObservableList<ObservableProduct> products = null;
 
     @FXML
     private TableView<ObservableProduct> tableProducts;
@@ -47,6 +48,10 @@ public class ShopController {
 
     @FXML
     private Button backBtn;
+    @FXML
+    private Button invoicingBtn;
+    @FXML
+    private Button loadQuantityBtn;
 
     @FXML
     private Circle userImage;
@@ -69,6 +74,32 @@ public class ShopController {
     }
 
     @FXML
+    void invoicingBtnClicked(ActionEvent event) throws IOException {
+        // table
+        InvoiceController.loadProductsInShoppingCart(products);
+        // window
+        Stage invoiceStage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("../view/Invoice.fxml"));
+        Scene scene = new Scene(root);
+        invoiceStage.setTitle("Invoice");
+        invoiceStage.setScene(scene);
+        invoiceStage.setResizable(false);
+        /**
+         * block all windows except invoice window because: 1 - user buy another
+         * product, and it lead to a new invoice 2 - user logout or cancel invoice ? Is
+         * there any way to improve this? or other logic?
+         */
+        invoiceStage.initModality(Modality.APPLICATION_MODAL);
+
+        invoiceStage.show();
+    }
+
+    @FXML
+    void loadQuantityBtnClicked(ActionEvent event) {
+        LoadProducts.loadQuantity();
+    }
+
+    @FXML
     void initialize() {
         // logout cancel button
         backBtn.setCancelButton(true);
@@ -81,8 +112,7 @@ public class ShopController {
         userRankLabel.setText(UserType.valueOf(MainApp.myUser.getRank()).name());
 
         // load data from database
-        LoadProducts loadProducts = new LoadProducts();
-        products = loadProducts.load();
+        products = LoadProducts.load();
 
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         quantityCol.setCellValueFactory(new PropertyValueFactory<>("quantity"));
