@@ -9,17 +9,21 @@ import com.user.UserType;
 
 import connector.LoadProducts;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
@@ -59,11 +63,14 @@ public class ShopController {
     private Label userNameLabel;
     @FXML
     private Label userRankLabel;
+    @FXML
+    private TextField txtFilterName;
 
     @FXML
     void backBtnClicked(ActionEvent event) throws IOException {
         // delete user, log out
         MainApp.myUser = null;
+        products.clear();
 
         Parent root = FXMLLoader.load(getClass().getResource("../view/LogIn.fxml"));
         Scene scene = new Scene(root, 600, 400);
@@ -77,21 +84,29 @@ public class ShopController {
     void invoicingBtnClicked(ActionEvent event) throws IOException {
         // table
         InvoiceController.loadProductsInShoppingCart(products);
-        // window
-        Stage invoiceStage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("../view/Invoice.fxml"));
-        Scene scene = new Scene(root);
-        invoiceStage.setTitle("Invoice");
-        invoiceStage.setScene(scene);
-        invoiceStage.setResizable(false);
-        /**
-         * block all windows except invoice window because: 1 - user buy another
-         * product, and it lead to a new invoice 2 - user logout or cancel invoice ? Is
-         * there any way to improve this? or other logic?
-         */
-        invoiceStage.initModality(Modality.APPLICATION_MODAL);
+        if (InvoiceController.getProductsInvoice().size() > 1) {
+            // window
+            Stage invoiceStage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("../view/Invoice.fxml"));
+            Scene scene = new Scene(root);
+            invoiceStage.setTitle("Invoice");
+            invoiceStage.setScene(scene);
+            invoiceStage.setResizable(false);
+            /**
+             * block all windows except invoice window because: 1 - user buy another
+             * product, and it lead to a new invoice 2 - user logout or cancel invoice ? Is
+             * there any way to improve this? or other logic?
+             */
+            invoiceStage.initModality(Modality.APPLICATION_MODAL);
 
-        invoiceStage.show();
+            invoiceStage.show();
+        } else {
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("Invoice error");
+            alert.setHeaderText(null);
+            alert.setContentText("Quantity of Products must be greater than 0");
+            alert.showAndWait();
+        }
     }
 
     @FXML
@@ -132,7 +147,31 @@ public class ShopController {
 
         userAmountCol.setCellValueFactory(new PropertyValueFactory<>("userAmount"));
 
-        tableProducts.setItems(products);
+        // wrap the ObservableList in FilteredList (initially display all data)
+        FilteredList<ObservableProduct> filteredProducts = new FilteredList<>(products, b -> true);
+
+        // set the filter Predicate whenever the filter change (add listener)
+        txtFilterName.textProperty().addListener((observable, oldVal, newVal) -> {
+            filteredProducts.setPredicate(product -> {
+                // if textfield is empty, display all products
+                if (newVal == null || newVal.isEmpty()) {
+                    return true;
+                }
+
+                // search by name
+                if (product.getName().indexOf(newVal) != -1) {
+                    return true;
+                }
+                /* I make string id = type + id in table -> search by type in string id */
+                else if (product.getId().indexOf(newVal) != -1) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        });
+
+        tableProducts.setItems(filteredProducts);
         tableProducts.setEditable(true);
 
     }

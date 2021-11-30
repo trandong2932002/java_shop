@@ -29,6 +29,8 @@ public class LoadProducts {
             "export_price", };
 
     public static ObservableList<ObservableProduct> load() {
+        createNewIDIterator[0] = 0;
+        createNewIDIterator[1] = 0;
         int[] loadColNumber = { 0, 1, 2, 3, 4, 5 };
         query = generateLoadProductsQuery(loadColNumber);
         try {

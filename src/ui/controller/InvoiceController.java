@@ -7,6 +7,7 @@ import com.invoice.ObservableInvoice;
 import com.product.ObservableProduct;
 
 import connector.LoadProducts;
+import connector.UpdateOrder;
 import connector.UpdateQuantityProducts;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,7 +23,7 @@ import main.MainApp;
 
 public class InvoiceController {
 
-    public static ObservableList<ObservableInvoice> productsInvoice = FXCollections.observableArrayList();
+    private static ObservableList<ObservableInvoice> productsInvoice = FXCollections.observableArrayList();
 
     private static BigDecimal totalPrice;
 
@@ -53,12 +54,13 @@ public class InvoiceController {
 
     @FXML
     void payBtnClicked(ActionEvent event) {
-        /**
-         * update quantity in database
-         */
+        // update quantity in database
         UpdateQuantityProducts.update(productsInvoice);
+        UpdateOrder.update(MainApp.myUser.getId(), totalPrice);
+
         LoadProducts.loadQuantity();
         LoadProducts.resetYourQuantity();
+        
         Stage stage = (Stage) usernameLabel.getScene().getWindow();
         stage.close();
     }
@@ -102,4 +104,14 @@ public class InvoiceController {
             }
         }
     }
+
+    public static ObservableList<ObservableInvoice> getProductsInvoice() {
+        return productsInvoice;
+    }
+
+    public static void setProductsInvoice(ObservableList<ObservableInvoice> productsInvoice) {
+        InvoiceController.productsInvoice = productsInvoice;
+    }
+
+    
 }

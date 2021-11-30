@@ -1,18 +1,28 @@
 package com.user;
 
 public class User {
+    private int id;
     private String first_name;
     private String last_name;
     private String username;
     private UserType rank;
     private int reward_point;
-    
-    public User(String first_name, String last_name, String username, int rank, int reward_point) {
+
+    public User(int id, String first_name, String last_name, String username, int rank, int reward_point) {
+        this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.username = username;
         this.rank = UserType.valueOf(rank);
         this.reward_point = reward_point;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFirst_name() {

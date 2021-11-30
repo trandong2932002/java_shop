@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
@@ -38,15 +39,25 @@
                   </VBox>
                </children>
             </Pane>
-            <Pane layoutX="-49.0" layoutY="-60.0" prefHeight="80.0" prefWidth="80.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Pane layoutX="500.0" prefHeight="80.0" prefWidth="110.0" AnchorPane.rightAnchor="230.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Button fx:id="backBtn" layoutX="18.0" layoutY="17.0" mnemonicParsing="false" onAction="#backBtnClicked" text="Back" />
+                  <Button fx:id="loadQuantityBtn" layoutX="9.0" layoutY="28.0" mnemonicParsing="false" onAction="#loadQuantityBtnClicked" text="Load New Qty" />
                </children>
             </Pane>
-            <Pane layoutX="500.0" prefHeight="80.0" prefWidth="120.0" AnchorPane.topAnchor="0.0">
+            <Pane prefHeight="80.0" prefWidth="80.0" AnchorPane.rightAnchor="340.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Button fx:id="invoicingBtn" layoutX="20.0" layoutY="14.0" mnemonicParsing="false" onAction="#invoicingBtnClicked" text="Invoicing" />
-                  <Button fx:id="loadQuantityBtn" layoutX="14.0" layoutY="47.0" mnemonicParsing="false" onAction="#loadQuantityBtnClicked" text="Load New Qty" />
+                  <Button fx:id="invoicingBtn" layoutX="10.0" layoutY="29.0" mnemonicParsing="false" onAction="#invoicingBtnClicked" text="Invoicing" />
+               </children>
+            </Pane>
+            <Pane layoutX="-49.0" layoutY="-60.0" prefHeight="80.0" prefWidth="80.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Button fx:id="backBtn" layoutX="20.0" layoutY="28.0" mnemonicParsing="false" onAction="#backBtnClicked" text="Back" />
+               </children>
+            </Pane>
+            <Pane layoutX="173.0" prefHeight="80.0" prefWidth="400.0" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <TextField fx:id="txtFilterName" layoutX="62.0" layoutY="28.0" prefHeight="25.0" prefWidth="324.0" />
+                  <Label layoutX="14.0" layoutY="32.0" text="Search" />
                </children>
             </Pane>
          </children>

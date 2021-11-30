@@ -72,8 +72,13 @@ public class LogInController {
 
         if (resultSet.next()) {
             // create user for login session
-            MainApp.myUser = new User(resultSet.getString("first_name"), resultSet.getString("last_name"),
-                    resultSet.getString("username"), resultSet.getInt("rank"), resultSet.getInt("reward_point"));
+            int id = resultSet.getInt("id");
+            String firstName = resultSet.getString("first_name");
+            String lastName = resultSet.getString("last_name");
+            String userName = resultSet.getString("username");
+            int rank = resultSet.getInt("rank");
+            int rewardPoint = resultSet.getInt("reward_point");
+            MainApp.myUser = new User(id, firstName, lastName, userName, rank, rewardPoint);
             return true;
         } else {
             lblAnnounce.setTextFill(Color.TOMATO);

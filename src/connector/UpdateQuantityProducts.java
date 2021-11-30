@@ -10,11 +10,8 @@ import com.invoice.ObservableInvoice;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 public class UpdateQuantityProducts {
     private static ObservableList<ObservableInvoice> products = FXCollections.observableArrayList();
@@ -34,14 +31,11 @@ public class UpdateQuantityProducts {
             stmt.close();
         } catch (ClassNotFoundException | SQLException e) {
             if (e.getMessage().indexOf("out of range") != -1) {
-                System.err.println("OUT OF RANGE");
-                // create new alert window
-                Stage stage = new Stage();
-                Label label = new Label("The number of products you need is larger than the number of products available");
-                stage.setTitle("OUT OF RANGE");
-                stage.setScene(new Scene(new Pane(label)));
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage.show();
+                Alert alert = new Alert(AlertType.WARNING);
+                alert.setTitle("Quantity error");
+                alert.setHeaderText(null);
+                alert.setContentText("The quantity of product you need is greater than the available quantity of a product.");
+                alert.showAndWait();
             } else {
                 System.err.println(e.getMessage());
             }
