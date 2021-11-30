@@ -57,11 +57,11 @@
          <children>
             <TableView fx:id="tableProducts" prefHeight="521.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columns>
-                <TableColumn fx:id="nameCol" minWidth="300.0" prefWidth="600.0" text="Name" />
-                <TableColumn fx:id="quantityCol" prefWidth="75.0" text="Quantity" />
-                  <TableColumn fx:id="priceCol" minWidth="30.0" prefWidth="75.0" text="Price" />
-                  <TableColumn fx:id="userQuantityCol" prefWidth="75.0" text="Your quantity" />
-                  <TableColumn fx:id="userAmountCol" minWidth="30.0" prefWidth="75.0" text="Amount" />
+                <TableColumn fx:id="nameCol" minWidth="300.0" prefWidth="600.0" sortable="false" text="Name" />
+                <TableColumn fx:id="quantityCol" prefWidth="75.0" sortable="false" text="Quantity" />
+                  <TableColumn fx:id="priceCol" minWidth="30.0" prefWidth="75.0" sortable="false" text="Price" />
+                  <TableColumn fx:id="userQuantityCol" prefWidth="75.0" sortable="false" text="Your quantity" />
+                  <TableColumn fx:id="userAmountCol" minWidth="30.0" prefWidth="75.0" sortable="false" text="Amount" />
               </columns>
             </TableView>
          </children>
