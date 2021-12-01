@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum UserType {
-    NEWCUSTOMER(0), LOYALCUSTOMER(1), STAFF(2), MANAGER(3), OWNER(4);
+    NEWCUSTOMER(0), COPPER(1), SILVER(2), GOLD(3), PLATINUM(4);
 
     private int value;
     private static Map<Integer, UserType> map = new HashMap<>();

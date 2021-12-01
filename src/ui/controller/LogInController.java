@@ -63,7 +63,7 @@ public class LogInController {
         String password = txtPassword.getText();
 
         // connect and query
-        String query = "SELECT * FROM persons WHERE username = ? AND password = ?";
+        String query = "SELECT * FROM customers WHERE username = ? AND password = ?";
         connect = ConnectionToDB.ConnectToDB();
         pstmt = connect.prepareStatement(query);
         pstmt.setString(1, username);

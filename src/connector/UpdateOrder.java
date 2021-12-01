@@ -21,7 +21,7 @@ public class UpdateOrder {
         }
     }
 
-    public static String generateUpdateOrder(int customer_id, BigDecimal amount) {
+    private static String generateUpdateOrder(int customer_id, BigDecimal amount) {
         String[] q = { "INSERT INTO orders(customer_id, amount) VALUES (", /* customer_id */ ", ",
                 /* amount */");" };
 

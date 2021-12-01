@@ -84,7 +84,7 @@ public class ShopController {
     void invoicingBtnClicked(ActionEvent event) throws IOException {
         // table
         InvoiceController.loadProductsInShoppingCart(products);
-        if (InvoiceController.getProductsInvoice().size() > 1) {
+        if (InvoiceController.getProductsInvoice().size() >= 1) {
             // window
             Stage invoiceStage = new Stage();
             Parent root = FXMLLoader.load(getClass().getResource("../view/Invoice.fxml"));
@@ -100,6 +100,10 @@ public class ShopController {
             invoiceStage.initModality(Modality.APPLICATION_MODAL);
 
             invoiceStage.show();
+
+            invoiceStage.setOnHiding(e -> {
+                InvoiceController.deinitialize();
+            });
         } else {
             Alert alert = new Alert(AlertType.WARNING);
             alert.setTitle("Invoice error");
