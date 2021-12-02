@@ -94,8 +94,24 @@ public class InvoiceController {
     void payBtnClicked(ActionEvent event) {
         // update quantity in database
         UpdateQuantityProducts.update(productsInvoice);
-        UpdateOrder.update(MainApp.myUser.getId(), new BigDecimal(totalPrice.get()));
         UpdateRewardPoint.update(MainApp.myUser.getId(), new BigDecimal(totalPrice.get()));
+        
+        int reward_point = 0;
+        switch (discount.get()) {
+            case "10.000":
+            reward_point = 100;
+            break;
+            case "60.000":
+            reward_point = 500;
+            break;
+            case "150.000":
+            reward_point = 1000;
+            break;
+            default:
+            break;
+        }
+        UpdateRewardPoint.use(MainApp.myUser.getId(), reward_point);
+        UpdateOrder.update(MainApp.myUser.getId(), new BigDecimal(totalPrice.get()), reward_point);
 
         LoadProducts.loadQuantity();
         LoadProducts.resetYourQuantity();
@@ -125,9 +141,9 @@ public class InvoiceController {
         // set price label
         totalPriceLabel.textProperty().bind(totalPrice);
 
-        // ? bug: because objectBinding bind to discount, if total value has changed,
-        // total value couldn't change
-        // multiple binding is not allowed (maybe)
+        // ? bug: because objectBinding bind to discount, if total price has changed,
+        // total must be change too
+        // multiple binding is not allowed (maybe I not sure)
         // so I change discount to update new total price
         discount.set("1.000");
         discount.set("0.000");

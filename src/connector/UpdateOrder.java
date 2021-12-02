@@ -9,9 +9,9 @@ public class UpdateOrder {
     private static Connection con = null;
     private static Statement stmt = null;
 
-    public static void update(int customer_id, BigDecimal amount) {
+    public static void update(int customer_id, BigDecimal amount, int reward_point) {
         try {
-            String query = generateUpdateOrder(customer_id, amount);
+            String query = generateUpdateOrder(customer_id, amount, reward_point);
             con = ConnectionToDB.ConnectToDB();
             stmt = con.createStatement();
             stmt.executeUpdate(query);
@@ -21,11 +21,11 @@ public class UpdateOrder {
         }
     }
 
-    private static String generateUpdateOrder(int customer_id, BigDecimal amount) {
-        String[] q = { "INSERT INTO orders(customer_id, amount) VALUES (", /* customer_id */ ", ",
-                /* amount */");" };
+    private static String generateUpdateOrder(int customer_id, BigDecimal amount, int reward_point) {
+        String[] q = { "INSERT INTO orders(customer_id, amount, reward_points_used) VALUES (", /* customer_id */ ", ",
+                /* amount */", ", /* reward_points_used*/ ");" };
 
-        String query = q[0] + customer_id + q[1] + amount.toString() + q[2];
+        String query = q[0] + customer_id + q[1] + amount.toString() + q[2] + reward_point + q[3];
         return query;
     }
 }

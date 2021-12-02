@@ -58,8 +58,8 @@
                         <ToggleGroup fx:id="RewardPointGroup" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton fx:id="RP500Btn" mnemonicParsing="false" text="500 points for 50.000đ" toggleGroup="$RewardPointGroup" />
-                  <RadioButton fx:id="RP1000Btn" mnemonicParsing="false" text="1000 points for 100.000đ" toggleGroup="$RewardPointGroup" />
+                  <RadioButton fx:id="RP500Btn" mnemonicParsing="false" text="500 points for 60.000đ" toggleGroup="$RewardPointGroup" />
+                  <RadioButton fx:id="RP1000Btn" mnemonicParsing="false" text="1000 points for 150.000đ" toggleGroup="$RewardPointGroup" />
                </children>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
