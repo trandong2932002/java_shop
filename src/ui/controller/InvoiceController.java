@@ -36,9 +36,9 @@ public class InvoiceController {
 
     private static ObservableList<ObservableInvoice> productsInvoice = FXCollections.observableArrayList();
     private static int userRewardPoint;
-    private static StringProperty totalPrice = new SimpleStringProperty("0.000");
-    private static StringProperty total = new SimpleStringProperty("0.000");
-    private static StringProperty discount = new SimpleStringProperty("0.000");
+    private static StringProperty totalPrice = new SimpleStringProperty("0.000");   // tổng tiền
+    private static StringProperty total = new SimpleStringProperty("0.000");        // tiền khách trả
+    private static StringProperty discount = new SimpleStringProperty("0.000");     // điểm thưởng quy đổi thành tiền
 
     // total -> (objectBinding = total price - discount) -> discount
     private static ObjectBinding<String> objectBinding = new ObjectBinding<String>() {
