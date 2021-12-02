@@ -56,6 +56,8 @@ public class ShopController {
     private Button invoicingBtn;
     @FXML
     private Button loadQuantityBtn;
+    @FXML
+    private Button resetUserQuantityBtn;
 
     @FXML
     private Circle userImage;
@@ -116,6 +118,12 @@ public class ShopController {
     @FXML
     void loadQuantityBtnClicked(ActionEvent event) {
         LoadProducts.loadQuantity();
+    }
+
+    @FXML
+    void resetUserQuantityBtnClicked(ActionEvent event) {
+        InvoiceController.getProductsInvoice().clear();
+        LoadProducts.resetYourQuantity();
     }
 
     @FXML
